@@ -32,16 +32,5 @@ namespace MarieTeam___PDF
 
         public double LargeurBat => largeurBat;
 
-
-
-
-
-
-
-
-
-
-
-
     }
 }
