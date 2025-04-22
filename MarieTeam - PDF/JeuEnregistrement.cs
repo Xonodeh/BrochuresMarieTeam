@@ -1,56 +1,35 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Data;
-using MySql.Data.MySqlClient;
-
+﻿using MySql.Data.MySqlClient;
 
 namespace MarieTeam___PDF
 {
     public class JeuEnregistrement
     {
-        private MySqlConnection connexion;
-        private MySqlCommand commande;
-        private MySqlDataReader lecteur;
+        private MySqlDataReader reader;
+        private MySqlConnection connection;
+        private MySqlCommand command;
 
-        public JeuEnregistrement(string requeteSQL)
+        public JeuEnregistrement(string chaineSQL)
         {
-            string chaineConnexion = "server=localhost;uid=root;pwd=;database=marieteam;";
-            connexion = new MySqlConnection(chaineConnexion);
-            commande = new MySqlCommand(requeteSQL, connexion);
-
-            try
-            {
-                connexion.Open();
-                lecteur = commande.ExecuteReader();
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine("Erreur de connexion : " + ex.Message);
-            }
+            connection = new MySqlConnection("server=localhost;database=mariteam;uid=mariteam;pwd=root;");
+            connection.Open();
+            command = new MySqlCommand(chaineSQL, connection);
+            reader = command.ExecuteReader();
         }
 
-        public void Suivant()
+        public bool LireSuivant()
         {
-            if (!lecteur.IsClosed) lecteur.Read();
-        }
-
-        public bool Fin()
-        {
-            return lecteur == null || !lecteur.HasRows || lecteur.IsClosed || lecteur.IsDBNull(0);
+            return reader.Read();
         }
 
         public object GetValeur(string nomChamp)
         {
-            return lecteur[nomChamp];
+            return reader[nomChamp];
         }
 
         public void Fermer()
         {
-            if (lecteur != null && !lecteur.IsClosed) lecteur.Close();
-            if (connexion.State == ConnectionState.Open) connexion.Close();
+            reader.Close();
+            connection.Close();
         }
     }
 }

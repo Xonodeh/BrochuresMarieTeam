@@ -1,68 +1,45 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 
 namespace MarieTeam___PDF
 {
-    namespace MarieTeam___PDF
+    public static class Passerelle
     {
-        public static class Passerelle
+        public static List<BateauVoyageur> ChargerLesBateauxVoyageurs()
         {
-            public static List<Equipement> ChargerLesEquipements(string idBateau)
+            List<BateauVoyageur> bateaux = new List<BateauVoyageur>();
+            JeuEnregistrement jeu = new JeuEnregistrement("SELECT * FROM bateau");
+
+            while (jeu.LireSuivant())
             {
-                List<Equipement> listeEquipements = new List<Equipement>();
+                string idBat = jeu.GetValeur("IDBateau").ToString();
+                string nomBat = jeu.GetValeur("nomBateau").ToString();
+                double longueur = double.Parse(jeu.GetValeur("LongueurBateau").ToString());
+                double largeur = double.Parse(jeu.GetValeur("largeurBat").ToString());
+                double vitesse = double.Parse(jeu.GetValeur("VitesseBateau").ToString());
+                string image = jeu.GetValeur("imageBat").ToString();
 
-                string requete = $"SELECT e.idEquip, e.libEquip FROM equipement e " +
-                                 $"JOIN disposer d ON d.idEquip = e.idEquip " +
-                                 $"WHERE d.idBat = '{idBateau}'";
-
-                JeuEnregistrement jeu = new JeuEnregistrement(requete);
-
-                while (!jeu.Fin())
-                {
-                    string idEquip = jeu.GetValeur("idEquip").ToString();
-                    string libEquip = jeu.GetValeur("libEquip").ToString();
-
-                    Equipement e = new Equipement(idEquip, libEquip);
-                    listeEquipements.Add(e);
-
-                    jeu.Suivant();
-                }
-
-                jeu.Fermer();
-                return listeEquipements;
+                List<Equipement> equipements = new List<Equipement>(); // Si tu ne gères pas encore les équipements
+                bateaux.Add(new BateauVoyageur(idBat, nomBat, longueur, largeur, vitesse, image, equipements));
             }
 
-            public static List<BateauVoyageur> ChargerLesBateauxVoyageurs()
+            jeu.Fermer();
+            return bateaux;
+        }
+
+
+        public static List<Equipement> ChargerLesEquipements(string idBateau)
+        {
+            List<Equipement> equipements = new List<Equipement>();
+            JeuEnregistrement jeu = new JeuEnregistrement($"SELECT idEquipement, libEquipement FROM Equipement WHERE idBat = '{idBateau}'");
+
+            while (jeu.LireSuivant())
             {
-                List<BateauVoyageur> liste = new List<BateauVoyageur>();
-
-                string requete = "SELECT * FROM bateauvoyageur";
-
-                JeuEnregistrement jeu = new JeuEnregistrement(requete);
-
-                while (!jeu.Fin())
-                {
-                    string id = jeu.GetValeur("idBat").ToString();
-                    string nom = jeu.GetValeur("nomBat").ToString();
-                    double longueur = Convert.ToDouble(jeu.GetValeur("longueurBat"));
-                    double largeur = Convert.ToDouble(jeu.GetValeur("largeurBat"));
-                    double vitesse = Convert.ToDouble(jeu.GetValeur("vitesseBatVoy"));
-                    string image = jeu.GetValeur("imageBatVoy").ToString();
-
-                    List<Equipement> equipements = ChargerLesEquipements(id);
-
-                    BateauVoyageur b = new BateauVoyageur(id, nom, longueur, largeur, vitesse, image, equipements);
-                    liste.Add(b);
-
-                    jeu.Suivant();
-                }
-
-                jeu.Fermer();
-                return liste;
+                string idEquip = jeu.GetValeur("idEquip").ToString();
+                string libEquip = jeu.GetValeur("libEquip").ToString();
+                equipements.Add(new Equipement(idEquip, libEquip));
             }
+            jeu.Fermer();
+            return equipements;
         }
     }
 }

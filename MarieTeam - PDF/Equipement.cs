@@ -21,10 +21,8 @@ namespace MarieTeam___PDF
         {
             return libEquip;
         }
-
-        public string IdEquip => idEquip;
-        public string LibEquip => libEquip;
     }
 
-   
+
+
 }

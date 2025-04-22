@@ -8,10 +8,10 @@ namespace MarieTeam___PDF
 {
     public class Bateau
     {
-        private string idBat;
-        private string nomBat;
-        private double longueurBat;
-        private double largeurBat;
+        protected string idBat;
+        protected string nomBat;
+        protected double longueurBat;
+        protected double largeurBat;
 
         public Bateau(string unId, string unNom, double uneLongueur, double uneLargeur)
         {
@@ -25,12 +25,6 @@ namespace MarieTeam___PDF
         {
             return $"Nom du bateau : {nomBat}\nLongueur : {longueurBat} mètres\nLargeur : {largeurBat} mètres";
         }
-
-        public string IdBat => idBat;
-        public string NomBat => nomBat;
-        public double LongueurBat => longueurBat;
-
-        public double LargeurBat => largeurBat;
-
     }
+
 }

@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 
 namespace MarieTeam___PDF
 {
@@ -13,26 +9,54 @@ namespace MarieTeam___PDF
         private List<Equipement> lesEquipements;
 
         public BateauVoyageur(string unId, string unNom, double uneLongueur, double uneLargeur,
-                              double uneVitesse, string uneImage, List<Equipement> uneListeEquip)
+                              double uneVitesse, string uneImage, List<Equipement> uneCollEquip)
             : base(unId, unNom, uneLongueur, uneLargeur)
         {
             vitesseBatVoy = uneVitesse;
             imageBatVoy = uneImage;
-            lesEquipements = uneListeEquip;
+            lesEquipements = uneCollEquip;
         }
 
         public override string ToString()
         {
-            string str = base.ToString() +
-                         $"\nVitesse : {vitesseBatVoy} noeuds\nListe des équipements du bateau :\n";
-            foreach (Equipement e in lesEquipements)
+            string equipements = "Liste des équipements du bateau :\n";
+            foreach (Equipement eq in lesEquipements)
             {
-                str += $"- {e}\n";
+                equipements += "- " + eq.ToString() + "\n";
             }
-            return str;
+
+            return base.ToString() + $"\nVitesse : {vitesseBatVoy} noeuds\n{equipements}";
         }
 
-        public string GetImageBatVoy() => imageBatVoy;
-        public List<Equipement> GetEquipements() => lesEquipements;
+        public string GetImageBatVoy()
+        {
+            return imageBatVoy;
+        }
+
+        // PROPRIÉTÉS AJOUTÉES CI-DESSOUS (OBLIGATOIRE)
+        public string nomBat
+        {
+            get { return base.nomBat; }
+        }
+
+        public double longueurBat
+        {
+            get { return base.longueurBat; }
+        }
+
+        public double largeurBat
+        {
+            get { return base.largeurBat; }
+        }
+
+        public double VitesseBatVoy
+        {
+            get { return vitesseBatVoy; }
+        }
+
+        public List<Equipement> LesEquipements
+        {
+            get { return lesEquipements; }
+        }
     }
 }
