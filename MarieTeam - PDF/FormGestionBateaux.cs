@@ -69,5 +69,7 @@ namespace MarieTeam___PDF
                 MessageBox.Show("Veuillez sélectionner un bateau dans la liste !", "Erreur", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
         }
+
+       
     }
 }

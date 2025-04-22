@@ -47,6 +47,7 @@
             this.lstBateaux.Name = "lstBateaux";
             this.lstBateaux.Size = new System.Drawing.Size(213, 381);
             this.lstBateaux.TabIndex = 0;
+            this.lstBateaux.SelectedIndexChanged += new System.EventHandler(this.lstBateaux_SelectedIndexChanged);
             // 
             // txtNomBateau
             // 
@@ -54,7 +55,6 @@
             this.txtNomBateau.Name = "txtNomBateau";
             this.txtNomBateau.Size = new System.Drawing.Size(149, 20);
             this.txtNomBateau.TabIndex = 1;
-          
             // 
             // txtLongueur
             // 
@@ -108,7 +108,6 @@
             this.btnGenererPDF.TabIndex = 8;
             this.btnGenererPDF.Text = "Generer PDF";
             this.btnGenererPDF.UseVisualStyleBackColor = true;
-       
             // 
             // FormGestionBateaux
             // 
