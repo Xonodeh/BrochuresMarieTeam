@@ -1,4 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using MySql.Data.MySqlClient;
+using System;
+using System.Collections.Generic;
+using System.Windows.Forms;
 
 namespace MarieTeam___PDF
 {
@@ -41,5 +44,33 @@ namespace MarieTeam___PDF
             jeu.Fermer();
             return equipements;
         }
+
+        public static bool ModifierBateau(BateauVoyageur bateau)
+        {
+            try
+            {
+                string sql = "UPDATE bateau SET nomBateau=@nom, LongueurBateau=@longueur, largeurBat=@largeur, VitesseBateau=@vitesse, imageBat=@image WHERE IDBateau=@id";
+                using (MySqlConnection conn = new MySqlConnection("server=localhost;database=marieteam;uid=marieteam;pwd=root;"))
+                {
+                    conn.Open();
+                    using (MySqlCommand cmd = new MySqlCommand(sql, conn))
+                    {
+                        cmd.Parameters.AddWithValue("@nom", bateau.nomBat);
+                        cmd.Parameters.AddWithValue("@longueur", bateau.longueurBat);
+                        cmd.Parameters.AddWithValue("@largeur", bateau.largeurBat);
+                        cmd.Parameters.AddWithValue("@vitesse", bateau.VitesseBatVoy);
+                        cmd.Parameters.AddWithValue("@image", bateau.GetImageBatVoy());
+                        cmd.Parameters.AddWithValue("@id", bateau.idBat); // Il te faut une propriété idBat
+                        return cmd.ExecuteNonQuery() > 0;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Erreur SQL : " + ex.Message);
+                return false;
+            }
+        }
+
     }
 }

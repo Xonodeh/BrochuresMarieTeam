@@ -74,5 +74,55 @@ namespace MarieTeam___PDF
         {
 
         }
+
+        private void label4_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label6_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void btnGenererPDF_Click_1(object sender, EventArgs e)
+        {
+            // Ici, on passe toute la liste de bateaux pour générer la brochure complète
+            BrochurePDF.GenererBrochure(bateaux);
+            MessageBox.Show("PDF généré avec succès !", "Succès", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
+
+        private void btnModifier_Click(object sender, EventArgs e)
+        {
+            if (lstBateaux.SelectedIndex < 0)
+            {
+                MessageBox.Show("Sélectionnez un bateau à modifier.");
+                return;
+            }
+
+            var bateau = bateaux[lstBateaux.SelectedIndex];
+
+            // Met à jour l'objet bateau avec les nouvelles valeurs des TextBox
+            bateau.nomBat = txtNomBateau.Text;
+            bateau.longueurBat = double.TryParse(txtLongueur.Text, out double l) ? l : 0;
+            bateau.largeurBat = double.TryParse(txtLargeur.Text, out double la) ? la : 0;
+            bateau.VitesseBatVoy = double.TryParse(txtVitesse.Text, out double v) ? v : 0;
+            bateau.SetImageBatVoy(txtImageUrl.Text);
+
+            // Mets à jour dans la base (méthode à créer dans Passerelle)
+            bool res = Passerelle.ModifierBateau(bateau);
+
+            if (res)
+            {
+                MessageBox.Show("Bateau modifié avec succès !");
+                // Recharge la liste pour afficher la modif
+                lstBateaux.Items[lstBateaux.SelectedIndex] = bateau.nomBat;
+            }
+            else
+            {
+                MessageBox.Show("Erreur lors de la modification.");
+            }
+        }
+
     }
 }
