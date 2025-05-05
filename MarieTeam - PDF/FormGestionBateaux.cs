@@ -120,7 +120,46 @@ namespace MarieTeam___PDF
             }
             else
             {
-                MessageBox.Show("Erreur lors de la modification.");
+                MessageBox.Show("Erreur lors de la modification.\n\n" + Passerelle.erreurDerniereModif);
+            }
+        }
+
+        private void rtbEquipements_TextChanged(object sender, EventArgs e)
+        {
+            // Récupérer le texte de la RichTextBox
+            string texteEquipements = rtbEquipements.Text;
+
+            // Séparer les équipements, supposons qu'ils sont séparés par des virgules ou des retours à la ligne
+            string[] equipementsNoms = texteEquipements.Split(new[] { ',', '\n', '\r' }, StringSplitOptions.RemoveEmptyEntries);
+
+            // Liste pour stocker les objets Equipement
+            List<Equipement> equipementsSelectionnes = new List<Equipement>();
+
+            foreach (string nomEquip in equipementsNoms)
+            {
+                // Ici, on suppose que les équipements existent déjà dans la base de données
+                // Et que tu as déjà leur ID ou que tu les ajoutes manuellement
+                // Par exemple, ajout d'un équipement par son nom ou ID
+                // Cela dépend de ton application et de ta logique
+
+                // Exemple d'ajout d'un équipement fictif
+                equipementsSelectionnes.Add(new Equipement("id123", nomEquip.Trim()));
+            }
+
+            // Si des équipements sont sélectionnés, on les ajoute au bateau
+            if (equipementsSelectionnes.Count > 0)
+            {
+                string idBateau = "1";  // Remplace cela par l'ID du bateau sélectionné
+                bool succes = Passerelle.AjouterEquipementsAuBateau(idBateau, equipementsSelectionnes);
+
+                if (succes)
+                {
+                    MessageBox.Show("Les équipements ont été ajoutés avec succès !");
+                }
+                else
+                {
+                    MessageBox.Show("Une erreur est survenue.");
+                }
             }
         }
 

@@ -10,7 +10,7 @@ namespace MarieTeam___PDF
 
         public JeuEnregistrement(string chaineSQL)
         {
-            connection = new MySqlConnection("server=localhost;database=mariteam;uid=mariteam;pwd=root;");
+            connection = new MySqlConnection("server=127.0.0.1;database=mariteam;uid=root;pwd=;");
             connection.Open();
             command = new MySqlCommand(chaineSQL, connection);
             reader = command.ExecuteReader();

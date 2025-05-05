@@ -8,7 +8,6 @@ namespace MarieTeam___PDF
         private double vitesseBatVoy;
         private string imageBatVoy;
         private List<Equipement> lesEquipements;
-        public string idBat { get; set; }
 
         // Constructeur
         public BateauVoyageur(string unId, string unNom, double uneLongueur, double uneLargeur,
@@ -31,6 +30,8 @@ namespace MarieTeam___PDF
         }
 
         // Nouvelle version des propriétés : get ET set !
+
+      
         public string nomBat
         {
             get { return base.nomBat; }

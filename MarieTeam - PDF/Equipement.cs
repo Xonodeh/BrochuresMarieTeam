@@ -17,11 +17,22 @@ namespace MarieTeam___PDF
             libEquip = unLib;
         }
 
+        public string IdEquip
+        {
+            get { return idEquip; }
+        }
+
+        public string LibEquip
+        {
+            get { return libEquip; }
+        }
+
         public override string ToString()
         {
             return libEquip;
         }
     }
+
 
 
 

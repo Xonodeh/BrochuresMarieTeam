@@ -98,6 +98,7 @@
             this.rtbEquipements.Size = new System.Drawing.Size(148, 92);
             this.rtbEquipements.TabIndex = 6;
             this.rtbEquipements.Text = "";
+            this.rtbEquipements.TextChanged += new System.EventHandler(this.rtbEquipements_TextChanged);
             // 
             // picBateau
             // 
