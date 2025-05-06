@@ -124,6 +124,120 @@ namespace MarieTeam___PDF
                 return false;
             }
         }
+        public static List<Equipement> ChargerTousLesEquipements()
+        {
+            List<Equipement> equipements = new List<Equipement>();
+            JeuEnregistrement jeu = new JeuEnregistrement("SELECT * FROM equipement");
+
+            while (jeu.LireSuivant())
+            {
+                string id = jeu.GetValeur("idEquipement").ToString();
+                string lib = jeu.GetValeur("libEquipement").ToString();
+                equipements.Add(new Equipement(id, lib));
+            }
+
+            jeu.Fermer();
+            return equipements;
+        }
+
+        public static List<Equipement> ChargerEquipementsDuBateau(string idBateau)
+        {
+            List<Equipement> equipements = new List<Equipement>();
+            string requete = $@"
+            SELECT e.idEquipement, e.libEquipement 
+            FROM equipement e 
+            INNER JOIN bateau_equipement be ON e.idEquipement = be.idEquipement 
+            WHERE be.idBateau = '{idBateau}'";
+
+            JeuEnregistrement jeu = new JeuEnregistrement(requete);
+
+            while (jeu.LireSuivant())
+            {
+                string id = jeu.GetValeur("idEquipement").ToString();
+                string lib = jeu.GetValeur("libEquipement").ToString();
+                equipements.Add(new Equipement(id, lib));
+            }
+
+            jeu.Fermer();
+            return equipements;
+        }
+
+        public static bool AjouterEquipementAuBateau(string idBateau, string idEquipement)
+        {
+            try
+            {
+                string sql = "INSERT INTO bateau_equipement (idBateau, idEquipement) VALUES (@idBat, @idEquip)";
+                using (MySqlConnection conn = new MySqlConnection("server=127.0.0.1;database=mariteam;uid=root;pwd=;"))
+                {
+                    conn.Open();
+                    using (MySqlCommand cmd = new MySqlCommand(sql, conn))
+                    {
+                        cmd.Parameters.AddWithValue("@idBat", idBateau);
+                        cmd.Parameters.AddWithValue("@idEquip", idEquipement);
+                        return cmd.ExecuteNonQuery() > 0;
+                    }
+                }
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
+        public static bool SupprimerEquipementDuBateau(string idBateau, string idEquipement)
+        {
+            try
+            {
+                string sql = "DELETE FROM bateau_equipement WHERE idBateau = @idBat AND idEquipement = @idEquip";
+                using (MySqlConnection conn = new MySqlConnection("server=127.0.0.1;database=mariteam;uid=root;pwd=;"))
+                {
+                    conn.Open();
+                    using (MySqlCommand cmd = new MySqlCommand(sql, conn))
+                    {
+                        cmd.Parameters.AddWithValue("@idBat", idBateau);
+                        cmd.Parameters.AddWithValue("@idEquip", idEquipement);
+                        return cmd.ExecuteNonQuery() > 0;
+                    }
+                }
+            }
+            catch
+            {
+                return false;
+            }
+        }
+        public static List<Equipement> GetTousLesEquipements()
+        {
+            List<Equipement> liste = new List<Equipement>();
+            try
+            {
+                string sql = "SELECT idEquipement, libEquipement FROM equipement";
+                using (MySqlConnection conn = new MySqlConnection("server=127.0.0.1;database=mariteam;uid=root;pwd=;"))
+                {
+                    conn.Open();
+                    using (MySqlCommand cmd = new MySqlCommand(sql, conn))
+                    {
+                        using (MySqlDataReader reader = cmd.ExecuteReader())
+                        {
+                            while (reader.Read())
+                            {
+                                string id = reader.GetString("idEquipement");
+                                string lib = reader.GetString("libEquipement");
+                                liste.Add(new Equipement(id, lib));
+                            }
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Erreur lors de la récupération des équipements : " + ex.Message);
+            }
+
+            return liste;
+        }
+      
 
     }
+
 }
+

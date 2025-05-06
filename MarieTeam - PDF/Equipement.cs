@@ -8,8 +8,8 @@ namespace MarieTeam___PDF
 {
     public class Equipement
     {
-        private string idEquip;
-        private string libEquip;
+        public string idEquip;
+        public string libEquip;
 
         public Equipement(string unId, string unLib)
         {

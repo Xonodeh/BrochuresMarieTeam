@@ -34,7 +34,6 @@
             this.txtLargeur = new System.Windows.Forms.TextBox();
             this.txtVitesse = new System.Windows.Forms.TextBox();
             this.txtImageUrl = new System.Windows.Forms.TextBox();
-            this.rtbEquipements = new System.Windows.Forms.RichTextBox();
             this.picBateau = new System.Windows.Forms.PictureBox();
             this.btnGenererPDF = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
@@ -44,6 +43,11 @@
             this.label5 = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
             this.btnModifier = new System.Windows.Forms.Button();
+            this.label7 = new System.Windows.Forms.Label();
+            this.addEquipement = new System.Windows.Forms.Button();
+            this.supprEquipement = new System.Windows.Forms.Button();
+            this.toutLesEquip = new System.Windows.Forms.ListBox();
+            this.equipDuBateau = new System.Windows.Forms.ListBox();
             ((System.ComponentModel.ISupportInitialize)(this.picBateau)).BeginInit();
             this.SuspendLayout();
             // 
@@ -91,15 +95,6 @@
             this.txtImageUrl.Size = new System.Drawing.Size(149, 20);
             this.txtImageUrl.TabIndex = 5;
             // 
-            // rtbEquipements
-            // 
-            this.rtbEquipements.Location = new System.Drawing.Point(372, 199);
-            this.rtbEquipements.Name = "rtbEquipements";
-            this.rtbEquipements.Size = new System.Drawing.Size(148, 92);
-            this.rtbEquipements.TabIndex = 6;
-            this.rtbEquipements.Text = "";
-            this.rtbEquipements.TextChanged += new System.EventHandler(this.rtbEquipements_TextChanged);
-            // 
             // picBateau
             // 
             this.picBateau.Location = new System.Drawing.Point(573, 89);
@@ -110,7 +105,7 @@
             // 
             // btnGenererPDF
             // 
-            this.btnGenererPDF.Location = new System.Drawing.Point(478, 323);
+            this.btnGenererPDF.Location = new System.Drawing.Point(464, 323);
             this.btnGenererPDF.Name = "btnGenererPDF";
             this.btnGenererPDF.Size = new System.Drawing.Size(144, 70);
             this.btnGenererPDF.TabIndex = 8;
@@ -126,7 +121,6 @@
             this.label1.Size = new System.Drawing.Size(80, 13);
             this.label1.TabIndex = 9;
             this.label1.Text = "Nom du bateau";
-            this.label1.Click += new System.EventHandler(this.label1_Click);
             // 
             // label2
             // 
@@ -154,7 +148,6 @@
             this.label4.Size = new System.Drawing.Size(41, 13);
             this.label4.TabIndex = 12;
             this.label4.Text = "Vitesse";
-            this.label4.Click += new System.EventHandler(this.label4_Click);
             // 
             // label5
             // 
@@ -168,16 +161,15 @@
             // label6
             // 
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(270, 224);
+            this.label6.Location = new System.Drawing.Point(270, 200);
             this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(68, 13);
+            this.label6.Size = new System.Drawing.Size(108, 13);
             this.label6.TabIndex = 14;
-            this.label6.Text = "Équipements";
-            this.label6.Click += new System.EventHandler(this.label6_Click);
+            this.label6.Text = "Tout les équipements";
             // 
             // btnModifier
             // 
-            this.btnModifier.Location = new System.Drawing.Point(305, 323);
+            this.btnModifier.Location = new System.Drawing.Point(286, 323);
             this.btnModifier.Name = "btnModifier";
             this.btnModifier.Size = new System.Drawing.Size(135, 69);
             this.btnModifier.TabIndex = 15;
@@ -185,11 +177,61 @@
             this.btnModifier.UseVisualStyleBackColor = true;
             this.btnModifier.Click += new System.EventHandler(this.btnModifier_Click);
             // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(427, 200);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(119, 13);
+            this.label7.TabIndex = 16;
+            this.label7.Text = "Equipements du bateau";
+            // 
+            // addEquipement
+            // 
+            this.addEquipement.Location = new System.Drawing.Point(635, 212);
+            this.addEquipement.Name = "addEquipement";
+            this.addEquipement.Size = new System.Drawing.Size(164, 26);
+            this.addEquipement.TabIndex = 18;
+            this.addEquipement.Text = "Ajouter un équipement";
+            this.addEquipement.UseVisualStyleBackColor = true;
+            this.addEquipement.Click += new System.EventHandler(this.addEquipement_Click);
+            // 
+            // supprEquipement
+            // 
+            this.supprEquipement.Location = new System.Drawing.Point(635, 244);
+            this.supprEquipement.Name = "supprEquipement";
+            this.supprEquipement.Size = new System.Drawing.Size(164, 23);
+            this.supprEquipement.TabIndex = 19;
+            this.supprEquipement.Text = "Supprimer un équipement";
+            this.supprEquipement.UseVisualStyleBackColor = true;
+            this.supprEquipement.Click += new System.EventHandler(this.supprEquipement_Click);
+            // 
+            // toutLesEquip
+            // 
+            this.toutLesEquip.FormattingEnabled = true;
+            this.toutLesEquip.Location = new System.Drawing.Point(273, 216);
+            this.toutLesEquip.Name = "toutLesEquip";
+            this.toutLesEquip.Size = new System.Drawing.Size(148, 95);
+            this.toutLesEquip.TabIndex = 20;
+            // 
+            // equipDuBateau
+            // 
+            this.equipDuBateau.FormattingEnabled = true;
+            this.equipDuBateau.Location = new System.Drawing.Point(430, 216);
+            this.equipDuBateau.Name = "equipDuBateau";
+            this.equipDuBateau.Size = new System.Drawing.Size(160, 95);
+            this.equipDuBateau.TabIndex = 21;
+            // 
             // FormGestionBateaux
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.equipDuBateau);
+            this.Controls.Add(this.toutLesEquip);
+            this.Controls.Add(this.supprEquipement);
+            this.Controls.Add(this.addEquipement);
+            this.Controls.Add(this.label7);
             this.Controls.Add(this.btnModifier);
             this.Controls.Add(this.label6);
             this.Controls.Add(this.label5);
@@ -199,7 +241,6 @@
             this.Controls.Add(this.label1);
             this.Controls.Add(this.btnGenererPDF);
             this.Controls.Add(this.picBateau);
-            this.Controls.Add(this.rtbEquipements);
             this.Controls.Add(this.txtImageUrl);
             this.Controls.Add(this.txtVitesse);
             this.Controls.Add(this.txtLargeur);
@@ -223,7 +264,6 @@
         private System.Windows.Forms.TextBox txtLargeur;
         private System.Windows.Forms.TextBox txtVitesse;
         private System.Windows.Forms.TextBox txtImageUrl;
-        private System.Windows.Forms.RichTextBox rtbEquipements;
         private System.Windows.Forms.PictureBox picBateau;
         private System.Windows.Forms.Button btnGenererPDF;
         private System.Windows.Forms.Label label1;
@@ -233,5 +273,10 @@
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Button btnModifier;
+        private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.Button addEquipement;
+        private System.Windows.Forms.Button supprEquipement;
+        private System.Windows.Forms.ListBox toutLesEquip;
+        private System.Windows.Forms.ListBox equipDuBateau;
     }
 }
