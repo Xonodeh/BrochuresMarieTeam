@@ -22,13 +22,16 @@ namespace MarieTeam___PDF
                 double vitesse = double.Parse(jeu.GetValeur("VitesseBateau").ToString());
                 string image = jeu.GetValeur("imageBat").ToString();
 
-                List<Equipement> equipements = new List<Equipement>(); // Si tu ne gères pas encore les équipements
+                // 💡 Récupération des équipements du bateau
+                List<Equipement> equipements = Passerelle.ChargerEquipementsDuBateau(idBat);
+
                 bateaux.Add(new BateauVoyageur(idBat, nomBat, longueur, largeur, vitesse, image, equipements));
             }
 
             jeu.Fermer();
             return bateaux;
         }
+
 
 
         public static List<Equipement> ChargerLesEquipementsDuBateau(string idBateau)
