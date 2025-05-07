@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
 using System.Linq;
+using System.Net;
 using System.Windows.Forms;
 
 namespace MarieTeam___PDF
@@ -11,7 +12,7 @@ namespace MarieTeam___PDF
     {
         private List<BateauVoyageur> bateaux;
 
-        private Equipement TrouverEquipementParNom(string nom)
+        public Equipement TrouverEquipementParNom(string nom)
         {
             var tousLesEquipements = Passerelle.ChargerTousLesEquipements();
             return tousLesEquipements.FirstOrDefault(eq => eq.libEquip.Equals(nom, StringComparison.OrdinalIgnoreCase));
@@ -51,8 +52,10 @@ namespace MarieTeam___PDF
         {
             if (lstBateaux.SelectedIndex >= 0)
             {
+                // Récupère le bateau sélectionné dans la liste
                 var bateau = bateaux[lstBateaux.SelectedIndex];
 
+                // Met à jour les informations du bateau dans les champs de texte
                 txtNomBateau.Text = bateau.nomBat;
                 txtLongueur.Text = bateau.longueurBat.ToString();
                 txtLargeur.Text = bateau.largeurBat.ToString();
@@ -62,14 +65,43 @@ namespace MarieTeam___PDF
                 // Afficher les équipements seulement du bateau sélectionné
                 AfficherEquipementsDuBateau(bateau.idBat);
 
-                if (File.Exists(bateau.GetImageBatVoy()))
+                // Récupère l'image du bateau
+                string imagePath = bateau.GetImageBatVoy();
+                bool isUrl = imagePath.StartsWith("http", StringComparison.OrdinalIgnoreCase);
+
+                if (isUrl)
                 {
-                    picBateau.Image = Image.FromFile(bateau.GetImageBatVoy());
-                    picBateau.SizeMode = PictureBoxSizeMode.StretchImage;
+                    // Si l'image est une URL, la télécharger et l'afficher
+                    try
+                    {
+                        using (WebClient client = new WebClient())
+                        {
+                            using (Stream stream = client.OpenRead(imagePath))
+                            {
+                                Image img = Image.FromStream(stream);
+                                picBateau.Image = img;
+                                picBateau.SizeMode = PictureBoxSizeMode.StretchImage;
+                            }
+                        }
+                    }
+                    catch
+                    {
+                        MessageBox.Show("L'image n'a pas pu être téléchargée.");
+                        picBateau.Image = null;
+                    }
                 }
                 else
                 {
-                    picBateau.Image = null;
+                    // Si l'image est un chemin local, l'afficher directement
+                    if (File.Exists(imagePath))
+                    {
+                        picBateau.Image = Image.FromFile(imagePath);
+                        picBateau.SizeMode = PictureBoxSizeMode.StretchImage;
+                    }
+                    else
+                    {
+                        picBateau.Image = null;
+                    }
                 }
             }
         }
@@ -90,10 +122,16 @@ namespace MarieTeam___PDF
 
         private void btnGenererPDF_Click_1(object sender, EventArgs e)
         {
-            // Ici, on passe toute la liste de bateaux pour générer la brochure complète
+            // Recharger les équipements pour chaque bateau avant de générer le PDF
+            foreach (var bateau in bateaux)
+            {
+                bateau.LesEquipements = Passerelle.ChargerEquipementsDuBateau(bateau.idBat);
+            }
+
             BrochurePDF.GenererBrochure(bateaux);
             MessageBox.Show("PDF généré avec succès !", "Succès", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
+
 
         private void btnModifier_Click(object sender, EventArgs e)
         {
@@ -234,6 +272,21 @@ namespace MarieTeam___PDF
             foreach (var eq in equipements)
             {
                 toutLesEquip.Items.Add(eq.libEquip);
+            }
+        }
+
+        private void picBateau_Click(object sender, EventArgs e)
+        {
+            // Vérifie si l'image est déjà chargée
+            if (picBateau.Image != null)
+            {
+                // Si l'image est déjà affichée, tu peux faire une action ici
+                // Par exemple, afficher un message ou ouvrir une fenêtre de détails
+                MessageBox.Show("L'image du bateau a été cliquée !");
+            }
+            else
+            {
+                MessageBox.Show("Aucune image disponible à afficher.");
             }
         }
     }

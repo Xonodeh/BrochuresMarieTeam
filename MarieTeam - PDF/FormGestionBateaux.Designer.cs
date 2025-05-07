@@ -102,6 +102,7 @@
             this.picBateau.Size = new System.Drawing.Size(146, 54);
             this.picBateau.TabIndex = 7;
             this.picBateau.TabStop = false;
+            this.picBateau.Click += new System.EventHandler(this.picBateau_Click);
             // 
             // btnGenererPDF
             // 
