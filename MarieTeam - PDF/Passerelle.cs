@@ -8,6 +8,12 @@ namespace MarieTeam___PDF
     public static class Passerelle
     {
         public static string erreurDerniereModif = "";
+
+        /*
+         * Méthode pour charger la liste des bateaux voyageurs depuis la base de données
+         *
+         * @return List<BateauVoyageur> : liste des bateaux voyageurs
+         */
         public static List<BateauVoyageur> ChargerLesBateauxVoyageurs()
         {
             List<BateauVoyageur> bateaux = new List<BateauVoyageur>();
@@ -32,15 +38,19 @@ namespace MarieTeam___PDF
             return bateaux;
         }
 
-
-
+        /*
+         * Méthode pour charger les équipements d'un bateau spécifique
+         *
+         * @param idBateau : identifiant du bateau
+         * @return List<Equipement> : liste des équipements du bateau
+         */
         public static List<Equipement> ChargerLesEquipementsDuBateau(string idBateau)
         {
             List<Equipement> equipements = new List<Equipement>();
 
             // On échappe l'ID pour éviter les injections SQL
             string requete = $@"
-                SELECT e.idEquipement, e.libEquipement 
+                SELECT e.idEquipement, e.libEquipement
                 FROM equipement e
                 JOIN bateau_equipement be ON e.idEquipement = be.idEquipement
                 WHERE be.idBateau = '{MySqlHelper.EscapeString(idBateau)}'";
@@ -57,6 +67,14 @@ namespace MarieTeam___PDF
             jeu.Fermer();
             return equipements;
         }
+
+        /*
+         * Méthode pour ajouter des équipements à un bateau
+         *
+         * @param idBateau : identifiant du bateau
+         * @param equipements : liste des équipements à ajouter
+         * @return bool : vrai si l'opération a réussi, faux sinon
+         */
         public static bool AjouterEquipementsAuBateau(string idBateau, List<Equipement> equipements)
         {
             try
@@ -100,7 +118,12 @@ namespace MarieTeam___PDF
             }
         }
 
-
+        /*
+         * Méthode pour modifier les informations d'un bateau
+         *
+         * @param bateau : objet BateauVoyageur contenant les nouvelles informations
+         * @return bool : vrai si la modification a réussi, faux sinon
+         */
         public static bool ModifierBateau(BateauVoyageur bateau)
         {
             try
@@ -127,6 +150,12 @@ namespace MarieTeam___PDF
                 return false;
             }
         }
+
+        /*
+         * Méthode pour charger tous les équipements depuis la base de données
+         *
+         * @return List<Equipement> : liste de tous les équipements
+         */
         public static List<Equipement> ChargerTousLesEquipements()
         {
             List<Equipement> equipements = new List<Equipement>();
@@ -143,13 +172,19 @@ namespace MarieTeam___PDF
             return equipements;
         }
 
+        /*
+         * Méthode pour charger les équipements d'un bateau spécifique
+         *
+         * @param idBateau : identifiant du bateau
+         * @return List<Equipement> : liste des équipements du bateau
+         */
         public static List<Equipement> ChargerEquipementsDuBateau(string idBateau)
         {
             List<Equipement> equipements = new List<Equipement>();
             string requete = $@"
-            SELECT e.idEquipement, e.libEquipement 
-            FROM equipement e 
-            INNER JOIN bateau_equipement be ON e.idEquipement = be.idEquipement 
+            SELECT e.idEquipement, e.libEquipement
+            FROM equipement e
+            INNER JOIN bateau_equipement be ON e.idEquipement = be.idEquipement
             WHERE be.idBateau = '{idBateau}'";
 
             JeuEnregistrement jeu = new JeuEnregistrement(requete);
@@ -165,6 +200,13 @@ namespace MarieTeam___PDF
             return equipements;
         }
 
+        /*
+         * Méthode pour ajouter un équipement à un bateau
+         *
+         * @param idBateau : identifiant du bateau
+         * @param idEquipement : identifiant de l'équipement
+         * @return bool : vrai si l'ajout a réussi, faux sinon
+         */
         public static bool AjouterEquipementAuBateau(string idBateau, string idEquipement)
         {
             try
@@ -187,6 +229,13 @@ namespace MarieTeam___PDF
             }
         }
 
+        /*
+         * Méthode pour supprimer un équipement d'un bateau
+         *
+         * @param idBateau : identifiant du bateau
+         * @param idEquipement : identifiant de l'équipement
+         * @return bool : vrai si la suppression a réussi, faux sinon
+         */
         public static bool SupprimerEquipementDuBateau(string idBateau, string idEquipement)
         {
             try
@@ -208,6 +257,12 @@ namespace MarieTeam___PDF
                 return false;
             }
         }
+
+        /*
+         * Méthode pour récupérer tous les équipements depuis la base de données
+         *
+         * @return List<Equipement> : liste de tous les équipements
+         */
         public static List<Equipement> GetTousLesEquipements()
         {
             List<Equipement> liste = new List<Equipement>();
@@ -238,9 +293,5 @@ namespace MarieTeam___PDF
 
             return liste;
         }
-      
-
     }
-
 }
-

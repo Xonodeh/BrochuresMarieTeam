@@ -12,12 +12,23 @@ namespace MarieTeam___PDF
     {
         private List<BateauVoyageur> bateaux;
 
+        /*
+         * Méthode pour trouver un équipement par son nom
+         *
+         * @param nom : nom de l'équipement à trouver
+         * @return Equipement : l'équipement trouvé ou null si non trouvé
+         */
         public Equipement TrouverEquipementParNom(string nom)
         {
             var tousLesEquipements = Passerelle.ChargerTousLesEquipements();
             return tousLesEquipements.FirstOrDefault(eq => eq.libEquip.Equals(nom, StringComparison.OrdinalIgnoreCase));
         }
 
+        /*
+         * Méthode pour afficher les équipements d'un bateau
+         *
+         * @param idBateau : identifiant du bateau
+         */
         private void AfficherEquipementsDuBateau(string idBateau)
         {
             // Récupérer les équipements du bateau
@@ -29,11 +40,20 @@ namespace MarieTeam___PDF
             }
         }
 
+        /*
+         * Constructeur de la classe FormGestionBateaux
+         */
         public FormGestionBateaux()
         {
             InitializeComponent();
         }
 
+        /*
+         * Méthode appelée lors du chargement du formulaire
+         *
+         * @param sender : objet qui a déclenché l'événement
+         * @param e : arguments de l'événement
+         */
         private void FormGestionBateaux_Load(object sender, EventArgs e)
         {
             bateaux = Passerelle.ChargerLesBateauxVoyageurs();
@@ -48,6 +68,12 @@ namespace MarieTeam___PDF
             AfficherTousLesEquipements();
         }
 
+        /*
+         * Méthode appelée lors du changement de sélection dans la liste des bateaux
+         *
+         * @param sender : objet qui a déclenché l'événement
+         * @param e : arguments de l'événement
+         */
         private void lstBateaux_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (lstBateaux.SelectedIndex >= 0)
@@ -106,6 +132,12 @@ namespace MarieTeam___PDF
             }
         }
 
+        /*
+         * Méthode appelée lors du clic sur le bouton de génération de PDF pour un bateau
+         *
+         * @param sender : objet qui a déclenché l'événement
+         * @param e : arguments de l'événement
+         */
         private void btnGenererPDF_Click(object sender, EventArgs e)
         {
             if (lstBateaux.SelectedIndex >= 0)
@@ -120,6 +152,12 @@ namespace MarieTeam___PDF
             }
         }
 
+        /*
+         * Méthode appelée lors du clic sur le bouton de génération de PDF pour tous les bateaux
+         *
+         * @param sender : objet qui a déclenché l'événement
+         * @param e : arguments de l'événement
+         */
         private void btnGenererPDF_Click_1(object sender, EventArgs e)
         {
             // Recharger les équipements pour chaque bateau avant de générer le PDF
@@ -132,7 +170,12 @@ namespace MarieTeam___PDF
             MessageBox.Show("PDF généré avec succès !", "Succès", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
-
+        /*
+         * Méthode appelée lors du clic sur le bouton de modification d'un bateau
+         *
+         * @param sender : objet qui a déclenché l'événement
+         * @param e : arguments de l'événement
+         */
         private void btnModifier_Click(object sender, EventArgs e)
         {
             if (lstBateaux.SelectedIndex < 0)
@@ -165,6 +208,12 @@ namespace MarieTeam___PDF
             }
         }
 
+        /*
+         * Méthode appelée lors du changement de sélection dans la liste de tous les équipements
+         *
+         * @param sender : objet qui a déclenché l'événement
+         * @param e : arguments de l'événement
+         */
         private void toutLesEquip_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (toutLesEquip.SelectedIndex >= 0)
@@ -182,6 +231,12 @@ namespace MarieTeam___PDF
             }
         }
 
+        /*
+         * Méthode appelée lors du changement de sélection dans la liste des équipements du bateau
+         *
+         * @param sender : objet qui a déclenché l'événement
+         * @param e : arguments de l'événement
+         */
         private void equipDuBateau_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (equipDuBateau.SelectedIndex >= 0)
@@ -199,6 +254,12 @@ namespace MarieTeam___PDF
             }
         }
 
+        /*
+         * Méthode appelée lors du clic sur le bouton d'ajout d'un équipement au bateau
+         *
+         * @param sender : objet qui a déclenché l'événement
+         * @param e : arguments de l'événement
+         */
         private void addEquipement_Click(object sender, EventArgs e)
         {
             if (lstBateaux.SelectedIndex < 0) return;
@@ -232,6 +293,12 @@ namespace MarieTeam___PDF
             }
         }
 
+        /*
+         * Méthode appelée lors du clic sur le bouton de suppression d'un équipement du bateau
+         *
+         * @param sender : objet qui a déclenché l'événement
+         * @param e : arguments de l'événement
+         */
         private void supprEquipement_Click(object sender, EventArgs e)
         {
             if (lstBateaux.SelectedIndex < 0) return;
@@ -265,6 +332,9 @@ namespace MarieTeam___PDF
             }
         }
 
+        /*
+         * Méthode pour afficher tous les équipements
+         */
         private void AfficherTousLesEquipements()
         {
             var equipements = Passerelle.ChargerTousLesEquipements();
@@ -275,6 +345,12 @@ namespace MarieTeam___PDF
             }
         }
 
+        /*
+         * Méthode appelée lors du clic sur l'image du bateau
+         *
+         * @param sender : objet qui a déclenché l'événement
+         * @param e : arguments de l'événement
+         */
         private void picBateau_Click(object sender, EventArgs e)
         {
             // Vérifie si l'image est déjà chargée
@@ -288,6 +364,17 @@ namespace MarieTeam___PDF
             {
                 MessageBox.Show("Aucune image disponible à afficher.");
             }
+        }
+
+        /*
+         * Méthode appelée lors du changement de sélection dans la liste de tous les équipements
+         *
+         * @param sender : objet qui a déclenché l'événement
+         * @param e : arguments de l'événement
+         */
+        private void toutLesEquip_SelectedIndexChanged_1(object sender, EventArgs e)
+        {
+
         }
     }
 }

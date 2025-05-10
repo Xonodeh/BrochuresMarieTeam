@@ -214,6 +214,7 @@
             this.toutLesEquip.Name = "toutLesEquip";
             this.toutLesEquip.Size = new System.Drawing.Size(148, 95);
             this.toutLesEquip.TabIndex = 20;
+            this.toutLesEquip.SelectedIndexChanged += new System.EventHandler(this.toutLesEquip_SelectedIndexChanged_1);
             // 
             // equipDuBateau
             // 
