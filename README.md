@@ -1,26 +1,24 @@
-📖 Brochures MarieTeam
-Ce dépôt contient les ressources documentaires et les brochures de la compagnie MarieTeam. Il s'agit du volet "édition" du projet, regroupant les informations sur les lignes, les secteurs desservis et les tarifs sous format imprimable ou consultable.
+🖥️ MarieTeam - Gestionnaire de Brochures & Flotte (Desktop)
 
-🛳️ Contenu du Dépôt
-L'objectif de ce répertoire est de centraliser les supports d'information pour les clients :
 
-Présentation des Secteurs : Détails sur les liaisons (Belle-Île-en-Mer, Houat, Groix, etc.).
+Cette application C# .NET est l'outil d'administration interne de MarieTeam. Elle permet au personnel de bureau de gérer les données techniques des navires et de générer automatiquement des supports d'information (brochures) à partir des données de la base.
 
-Fiches Navires : Caractéristiques techniques des bateaux (vitesse, capacité passagers/véhicules).
+🎯 Fonctionnalités Clés
+Gestion de la Flotte : * Visualisation complète des bateaux (Voyageurs et Fret).
 
-Grilles Tarifaires : Documentation des tarifs selon les catégories (Adulte, Enfant, Véhicule) et les périodes.
+Modification des spécifications techniques (vitesse, longueur, largeur).
 
-🛠️ Usage
-Ces brochures sont destinées à être intégrées au site principal MarieTeam (via téléchargement PDF ou consultation dynamique) ou utilisées comme supports de communication print.
+Mise à jour des capacités de transport (nombre de passagers, capacité de véhicules).
 
-Structure suggérée
-/pdf : Les brochures finalisées au format PDF.
+Éditeur de Brochures : Interface dédiée à la création et à la mise à jour des informations destinées aux clients.
 
-/src : Les fichiers sources (images, logos, textes bruts).
+Synchronisation en Temps Réel : Connexion directe à la base de données MySQL pour que les modifications soient répercutées instantanément sur le site web.
 
-/docs : Documentation technique sur la structure des données maritimes.
+🛠️ Stack Technique
+Langage : C# (.NET Framework / .NET Core)
 
-🔗 Projets Liés
-Ce dépôt fait partie de l'écosystème MarieTeam :
+Interface : Windows Forms (WinForms)
 
-Application Web MarieTeam : Système de réservation et de gestion.
+Données : MySQL Connector/NET pour la liaison avec la base de données MariaDB/MySQL.
+
+Bibliothèques : Utilisation possible d'iTextSharp ou de bibliothèques similaires pour l'export de documents (selon tes fichiers).
